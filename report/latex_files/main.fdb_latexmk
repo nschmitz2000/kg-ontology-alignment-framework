@@ -1,12 +1,13 @@
 # Fdb version 4
-["biber main"] 1715239918.74158 "main.bcf" "main.bbl" "main" 1715239937.77834 0
-  "main.bcf" 1715239937.68969 117293 cbd5206e8bcc9babd9daacef3e364a99 "pdflatex"
+["biber main"] 1715239918.74158 "main.bcf" "main.bbl" "main" 1715266912.77279 0
+  "kg_project.bib" 0 -1 0 ""
+  "main.bcf" 1715266912.57961 117293 cbd5206e8bcc9babd9daacef3e364a99 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1715239936.50311 "/Users/tildietrich/Library/CloudStorage/OneDrive-Personal/ulisboa/2-semester/knowledge-graphs/kg-ontology-alignment-framework/report/main.tex" "main.pdf" "main" 1715239937.77865 0
-  "/Users/tildietrich/Library/CloudStorage/OneDrive-Personal/ulisboa/2-semester/knowledge-graphs/kg-ontology-alignment-framework/report/main.tex" 1715180536.37154 961 b0e454960b39dc970da50964864cef25 ""
+["pdflatex"] 1715266911.04044 "/Users/tildietrich/Library/CloudStorage/OneDrive-Personal/ulisboa/2-semester/knowledge-graphs/kg-ontology-alignment-framework/report/latex_files/main.tex" "main.pdf" "main" 1715266912.77314 0
+  "/Users/tildietrich/Library/CloudStorage/OneDrive-Personal/ulisboa/2-semester/knowledge-graphs/kg-ontology-alignment-framework/report/latex_files/main.tex" 1715180536.37154 961 b0e454960b39dc970da50964864cef25 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_25tcsq.enc" 1490131464 2921 8ca0eb0831f9bc5da080d3697cfe67bf ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecrm1095.tfm" 1136768653 3584 929cdff2b7a8c11bd4d49fd68cb0ae70 ""
@@ -175,10 +176,10 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1715185580.18306 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1715185539 8221448 83b4709b90c9f603a04fc4c5326fcf9d ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "main.aux" 1715239937.68609 1283 7d8c0475ab454178c0b93b45a6d37a6c "pdflatex"
+  "main.aux" 1715266912.57608 1283 7d8c0475ab454178c0b93b45a6d37a6c "pdflatex"
   "main.bbl" 1715239935.16139 466 ee04f40f768daeed26442158e95aba61 "biber main"
-  "main.out" 1715239937.68664 568 824b68104e437057d286d428693c4723 "pdflatex"
-  "main.run.xml" 1715239937.69036 2601 03d908dfc260b24661c52b2edaf1fb76 "pdflatex"
+  "main.out" 1715266912.57656 568 824b68104e437057d286d428693c4723 "pdflatex"
+  "main.run.xml" 1715266912.58027 2601 03d908dfc260b24661c52b2edaf1fb76 "pdflatex"
   "main.tex" 1715180536.37154 961 b0e454960b39dc970da50964864cef25 ""
   (generated)
   "main.aux"

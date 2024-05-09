@@ -1,8 +1,8 @@
-PWD /Users/tildietrich/Library/CloudStorage/OneDrive-Personal/ulisboa/2-semester/knowledge-graphs/kg-ontology-alignment-framework/report
+PWD /Users/tildietrich/Library/CloudStorage/OneDrive-Personal/ulisboa/2-semester/knowledge-graphs/kg-ontology-alignment-framework/report/latex_files
 INPUT /usr/local/texlive/2024/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/tildietrich/Library/CloudStorage/OneDrive-Personal/ulisboa/2-semester/knowledge-graphs/kg-ontology-alignment-framework/report/main.tex
+INPUT /Users/tildietrich/Library/CloudStorage/OneDrive-Personal/ulisboa/2-semester/knowledge-graphs/kg-ontology-alignment-framework/report/latex_files/main.tex
 OUTPUT main.log
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/acmart/acmart.cls
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/acmart/acmart.cls
