@@ -1,0 +1,1399 @@
+[
+    {
+        "class_uri": "http://mouse.owl#MA_1000",
+        "labels": [
+            {
+                "value": "gland 0",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1001",
+        "labels": [
+            {
+                "value": "artery 1",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1002",
+        "labels": [
+            {
+                "value": "membrane 2",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1003",
+        "labels": [
+            {
+                "value": "gland 3",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1004",
+        "labels": [
+            {
+                "value": "muscle 4",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1005",
+        "labels": [
+            {
+                "value": "vein 5",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1006",
+        "labels": [
+            {
+                "value": "vein 6",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1007",
+        "labels": [
+            {
+                "value": "cell 7",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1008",
+        "labels": [
+            {
+                "value": "artery 8",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1009",
+        "labels": [
+            {
+                "value": "cell 9",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1010",
+        "labels": [
+            {
+                "value": "artery 10",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1011",
+        "labels": [
+            {
+                "value": "artery 11",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1012",
+        "labels": [
+            {
+                "value": "membrane 12",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1013",
+        "labels": [
+            {
+                "value": "muscle 13",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1014",
+        "labels": [
+            {
+                "value": "membrane 14",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1015",
+        "labels": [
+            {
+                "value": "vein 15",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1016",
+        "labels": [
+            {
+                "value": "artery 16",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1017",
+        "labels": [
+            {
+                "value": "cell 17",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1018",
+        "labels": [
+            {
+                "value": "artery 18",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1019",
+        "labels": [
+            {
+                "value": "membrane 19",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1020",
+        "labels": [
+            {
+                "value": "gland 20",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1021",
+        "labels": [
+            {
+                "value": "muscle 21",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1022",
+        "labels": [
+            {
+                "value": "muscle 22",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1023",
+        "labels": [
+            {
+                "value": "tissue 23",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1024",
+        "labels": [
+            {
+                "value": "muscle 24",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1025",
+        "labels": [
+            {
+                "value": "membrane 25",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1026",
+        "labels": [
+            {
+                "value": "cell 26",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1027",
+        "labels": [
+            {
+                "value": "artery 27",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1028",
+        "labels": [
+            {
+                "value": "membrane 28",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1029",
+        "labels": [
+            {
+                "value": "nerve 29",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1030",
+        "labels": [
+            {
+                "value": "organ 30",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1031",
+        "labels": [
+            {
+                "value": "vein 31",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1032",
+        "labels": [
+            {
+                "value": "membrane 32",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1033",
+        "labels": [
+            {
+                "value": "nerve 33",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1034",
+        "labels": [
+            {
+                "value": "artery 34",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1035",
+        "labels": [
+            {
+                "value": "tissue 35",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1036",
+        "labels": [
+            {
+                "value": "gland 36",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1037",
+        "labels": [
+            {
+                "value": "vein 37",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1038",
+        "labels": [
+            {
+                "value": "membrane 38",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1039",
+        "labels": [
+            {
+                "value": "nerve 39",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1040",
+        "labels": [
+            {
+                "value": "bone 40",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1041",
+        "labels": [
+            {
+                "value": "membrane 41",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1042",
+        "labels": [
+            {
+                "value": "gland 42",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1043",
+        "labels": [
+            {
+                "value": "muscle 43",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1044",
+        "labels": [
+            {
+                "value": "cell 44",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1045",
+        "labels": [
+            {
+                "value": "bone 45",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1046",
+        "labels": [
+            {
+                "value": "artery 46",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1047",
+        "labels": [
+            {
+                "value": "gland 47",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1048",
+        "labels": [
+            {
+                "value": "cell 48",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1049",
+        "labels": [
+            {
+                "value": "organ 49",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1050",
+        "labels": [
+            {
+                "value": "muscle 50",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1051",
+        "labels": [
+            {
+                "value": "muscle 51",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1052",
+        "labels": [
+            {
+                "value": "vein 52",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1053",
+        "labels": [
+            {
+                "value": "tissue 53",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1054",
+        "labels": [
+            {
+                "value": "organ 54",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1055",
+        "labels": [
+            {
+                "value": "cell 55",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1056",
+        "labels": [
+            {
+                "value": "gland 56",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1057",
+        "labels": [
+            {
+                "value": "artery 57",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1058",
+        "labels": [
+            {
+                "value": "organ 58",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1059",
+        "labels": [
+            {
+                "value": "muscle 59",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1060",
+        "labels": [
+            {
+                "value": "membrane 60",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1061",
+        "labels": [
+            {
+                "value": "organ 61",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1062",
+        "labels": [
+            {
+                "value": "vein 62",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1063",
+        "labels": [
+            {
+                "value": "artery 63",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1064",
+        "labels": [
+            {
+                "value": "muscle 64",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1065",
+        "labels": [
+            {
+                "value": "vein 65",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1066",
+        "labels": [
+            {
+                "value": "cell 66",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1067",
+        "labels": [
+            {
+                "value": "artery 67",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1068",
+        "labels": [
+            {
+                "value": "organ 68",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1069",
+        "labels": [
+            {
+                "value": "nerve 69",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1070",
+        "labels": [
+            {
+                "value": "organ 70",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1071",
+        "labels": [
+            {
+                "value": "gland 71",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1072",
+        "labels": [
+            {
+                "value": "muscle 72",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1073",
+        "labels": [
+            {
+                "value": "nerve 73",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1074",
+        "labels": [
+            {
+                "value": "membrane 74",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1075",
+        "labels": [
+            {
+                "value": "nerve 75",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1076",
+        "labels": [
+            {
+                "value": "artery 76",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1077",
+        "labels": [
+            {
+                "value": "bone 77",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1078",
+        "labels": [
+            {
+                "value": "cell 78",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1079",
+        "labels": [
+            {
+                "value": "bone 79",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1080",
+        "labels": [
+            {
+                "value": "nerve 80",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1081",
+        "labels": [
+            {
+                "value": "cell 81",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1082",
+        "labels": [
+            {
+                "value": "membrane 82",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1083",
+        "labels": [
+            {
+                "value": "gland 83",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1084",
+        "labels": [
+            {
+                "value": "nerve 84",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1085",
+        "labels": [
+            {
+                "value": "cell 85",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1086",
+        "labels": [
+            {
+                "value": "organ 86",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1087",
+        "labels": [
+            {
+                "value": "membrane 87",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1088",
+        "labels": [
+            {
+                "value": "bone 88",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1089",
+        "labels": [
+            {
+                "value": "muscle 89",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1090",
+        "labels": [
+            {
+                "value": "tissue 90",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1091",
+        "labels": [
+            {
+                "value": "bone 91",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#AnatomicalStructure",
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1092",
+        "labels": [
+            {
+                "value": "muscle 92",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1093",
+        "labels": [
+            {
+                "value": "gland 93",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1094",
+        "labels": [
+            {
+                "value": "vein 94",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1095",
+        "labels": [
+            {
+                "value": "nerve 95",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1096",
+        "labels": [
+            {
+                "value": "cell 96",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#AnatomicalStructure"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1097",
+        "labels": [
+            {
+                "value": "nerve 97",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1098",
+        "labels": [
+            {
+                "value": "artery 98",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://www.w3.org/2002/07/owl#Thing",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    },
+    {
+        "class_uri": "http://mouse.owl#MA_1099",
+        "labels": [
+            {
+                "value": "vein 99",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "language": null
+            }
+        ],
+        "superclasses": [
+            "http://mouse.owl#AnatomicalStructure",
+            "http://mouse.owl#BiologicalProcess"
+        ]
+    }
+]
