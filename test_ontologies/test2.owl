@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://mouse.owl#"
+     xml:base="http://mouse.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:oboRel="http://www.obofoundry.org/ro/ro.owl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:oboInOwl="http://www.geneontology.org/formats/oboInOwl#">
+    <owl:Ontology rdf:about="http://mouse.owl">
+        <oboInOwl:hasDate rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2007-01-18T12:17:00</oboInOwl:hasDate>
+        <oboInOwl:hasDefaultNamespace rdf:datatype="http://www.w3.org/2001/XMLSchema#string">adult_mouse_anatomy.gxd</oboInOwl:hasDefaultNamespace>
+        <oboInOwl:savedBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string">terryh</oboInOwl:savedBy>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym"/>
+    <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasDbXref"/>
+    <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasDefaultNamespace"/>
+    <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasAlternativeId"/>
+    <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#savedBy"/>
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2000/01/rdf-schema#label"/>
+    <owl:AnnotationProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#hasDate"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://mouse.owl#UNDEFINED_is_a -->
+
+    <owl:ObjectProperty rdf:about="http://mouse.owl#UNDEFINED_is_a">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">is a</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://mouse.owl#UNDEFINED_part_of -->
+
+    <owl:ObjectProperty rdf:about="http://mouse.owl#UNDEFINED_part_of">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Part of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.geneontology.org/formats/oboInOwl#ObsoleteProperty -->
+
+    <owl:ObjectProperty rdf:about="http://www.geneontology.org/formats/oboInOwl#ObsoleteProperty"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://mouse.owl#MA_0000001 -->
+    <owl:Class rdf:about="1 ontology 2">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mouse anatomian</rdfs:label>
+    </owl:Class>
+    </rdf:RDF>
