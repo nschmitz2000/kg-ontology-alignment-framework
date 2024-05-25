@@ -1,14 +1,13 @@
 # This will be the final exec file for the project
 
 # Importing the required libraries
-import pandas as pd
 import rdflib
-from collections import OrderedDict, defaultdict
-import linktransformer as lt
+import pandas as pd
+from collections import OrderedDict
 
 # Define all functions here
 
-# Function to load the ontology
+## Function to load the ontology
 def load_ontology(file_path):
     """
     Loads an ontology from a given file path, which can be in RDF (.rdf) or OWL (.owl) format.
@@ -42,11 +41,11 @@ def load_ontology(file_path):
 
     return graph
 
-# Function to preprocess labels
+## Function to preprocess labels
 def preprocess_label(label):
     return str(label).replace("_", " ").strip(" ,.").lower()
 
-# Function to load ontology information into dict
+## Function to load ontology information into dict
 def extract_ontology_details_to_dict(graph):
     # Query for classes
     class_query = """
@@ -78,19 +77,39 @@ def extract_ontology_details_to_dict(graph):
             
     return ontology_labels_dict, labels_list
 
-# Function for LLM implementation (LinkTransformer)
-def linktransformer_comparison(onto1_dict, onto2_dict):
-    # Make pandas dataframes (can only compare dataframes)
-    # Specify the record_path to expand the labels and superclasses if needed
-    df_onto1 = pd.DataFrame(list(onto1_dict.items()), columns=['label', 'class'])
+## Function to find exact matches
+def exact_string_match(onto1_dict, onto1_list, onto2_dict, onto2_list):
+    exact_matches = {}
+    matched_labels1 = set()
+    matched_labels2 = set()
 
-    df_onto2 = pd.DataFrame(list(onto2_dict.items()), columns=['label', 'class'])
+    for label1 in onto1_list:
+        for label2 in onto2_list:
+            if label1 == label2:
+                # Creating the formatted match entry
+                class1 = onto1_dict[label1]
+                class2 = onto2_dict[label2]
+                exact_matches[class1] = [label1, class2, label2, 1]
+                
+                # Tracking matched labels for later removal
+                matched_labels1.add(label1)
+                matched_labels2.add(label2)
+                
+    # Remove matched labels from lists and dictionaries
+    for label in matched_labels1:
+        onto1_list.remove(label)
+        del onto1_dict[label]
 
-    df_matched_1_to_2 = lt.merge(df_onto1, df_onto2, on="label", merge_type="1:1", suffixes=('_onto1', '_onto2'), model='sentence-transformers/all-MiniLM-L6-v2')
+    for label in matched_labels2:
+        onto2_list.remove(label)
+        del onto2_dict[label]
 
-    df_matched_2_to_1 = lt.merge(df_onto2, df_onto1, on="label", merge_type="1:1", suffixes=('_onto1', '_onto2'), model='sentence-transformers/all-MiniLM-L6-v2')
+    return exact_matches, onto1_dict, onto1_list, onto2_dict, onto2_list
 
+## Function 
 
-    return df_matched_1_to_2, df_matched_2_to_1
+# Function for LLM implementation
+
+# Get all user inputs
 
 # Apply the functions here

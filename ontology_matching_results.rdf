@@ -8176,14 +8176,6 @@
       </kw:Cell>
     </kw:map>
     <kw:map>
-      <kw:Cell rdf:about="http://example.org/cell/MA_0001696_NCI_C32208">
-        <kw:entity1 rdf:resource="http://mouse.owl#MA_0001696"/>
-        <kw:entity2 rdf:resource="http://human.owl#NCI_C32208"/>
-        <kw:measure rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</kw:measure>
-        <kw:relation>=</kw:relation>
-      </kw:Cell>
-    </kw:map>
-    <kw:map>
       <kw:Cell rdf:about="http://example.org/cell/MA_0001695_NCI_C48940">
         <kw:entity1 rdf:resource="http://mouse.owl#MA_0001695"/>
         <kw:entity2 rdf:resource="http://human.owl#NCI_C48940"/>
@@ -10144,6 +10136,14 @@
       </kw:Cell>
     </kw:map>
     <kw:map>
+      <kw:Cell rdf:about="http://example.org/cell/MA_0001740_NCI_C13092">
+        <kw:entity1 rdf:resource="http://mouse.owl#MA_0001740"/>
+        <kw:entity2 rdf:resource="http://human.owl#NCI_C13092"/>
+        <kw:measure rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</kw:measure>
+        <kw:relation>=</kw:relation>
+      </kw:Cell>
+    </kw:map>
+    <kw:map>
       <kw:Cell rdf:about="http://example.org/cell/MA_0001431_NCI_C32902">
         <kw:entity1 rdf:resource="http://mouse.owl#MA_0001431"/>
         <kw:entity2 rdf:resource="http://human.owl#NCI_C32902"/>
@@ -10280,14 +10280,6 @@
       </kw:Cell>
     </kw:map>
     <kw:map>
-      <kw:Cell rdf:about="http://example.org/cell/MA_0001740_NCI_C13092">
-        <kw:entity1 rdf:resource="http://mouse.owl#MA_0001740"/>
-        <kw:entity2 rdf:resource="http://human.owl#NCI_C13092"/>
-        <kw:measure rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</kw:measure>
-        <kw:relation>=</kw:relation>
-      </kw:Cell>
-    </kw:map>
-    <kw:map>
       <kw:Cell rdf:about="http://example.org/cell/MA_0001587_NCI_C33509">
         <kw:entity1 rdf:resource="http://mouse.owl#MA_0001587"/>
         <kw:entity2 rdf:resource="http://human.owl#NCI_C33509"/>
@@ -10408,6 +10400,14 @@
       </kw:Cell>
     </kw:map>
     <kw:map>
+      <kw:Cell rdf:about="http://example.org/cell/MA_0001696_NCI_C32208">
+        <kw:entity1 rdf:resource="http://mouse.owl#MA_0001696"/>
+        <kw:entity2 rdf:resource="http://human.owl#NCI_C32208"/>
+        <kw:measure rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</kw:measure>
+        <kw:relation>=</kw:relation>
+      </kw:Cell>
+    </kw:map>
+    <kw:map>
       <kw:Cell rdf:about="http://example.org/cell/MA_0001426_NCI_C32244">
         <kw:entity1 rdf:resource="http://mouse.owl#MA_0001426"/>
         <kw:entity2 rdf:resource="http://human.owl#NCI_C32244"/>
@@ -10475,6 +10475,14 @@
       <kw:Cell rdf:about="http://example.org/cell/MA_0000230_NCI_C33590">
         <kw:entity1 rdf:resource="http://mouse.owl#MA_0000230"/>
         <kw:entity2 rdf:resource="http://human.owl#NCI_C33590"/>
+        <kw:measure rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</kw:measure>
+        <kw:relation>=</kw:relation>
+      </kw:Cell>
+    </kw:map>
+    <kw:map>
+      <kw:Cell rdf:about="http://example.org/cell/MA_0002445_NCI_C12759">
+        <kw:entity1 rdf:resource="http://mouse.owl#MA_0002445"/>
+        <kw:entity2 rdf:resource="http://human.owl#NCI_C12759"/>
         <kw:measure rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</kw:measure>
         <kw:relation>=</kw:relation>
       </kw:Cell>
@@ -10611,6 +10619,14 @@
       <kw:Cell rdf:about="http://example.org/cell/MA_0000588_NCI_C32299">
         <kw:entity1 rdf:resource="http://mouse.owl#MA_0000588"/>
         <kw:entity2 rdf:resource="http://human.owl#NCI_C32299"/>
+        <kw:measure rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</kw:measure>
+        <kw:relation>=</kw:relation>
+      </kw:Cell>
+    </kw:map>
+    <kw:map>
+      <kw:Cell rdf:about="http://example.org/cell/MA_0000985_NCI_C32309">
+        <kw:entity1 rdf:resource="http://mouse.owl#MA_0000985"/>
+        <kw:entity2 rdf:resource="http://human.owl#NCI_C32309"/>
         <kw:measure rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</kw:measure>
         <kw:relation>=</kw:relation>
       </kw:Cell>
@@ -10779,6 +10795,14 @@
       <kw:Cell rdf:about="http://example.org/cell/MA_0002447_NCI_C25444">
         <kw:entity1 rdf:resource="http://mouse.owl#MA_0002447"/>
         <kw:entity2 rdf:resource="http://human.owl#NCI_C25444"/>
+        <kw:measure rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</kw:measure>
+        <kw:relation>=</kw:relation>
+      </kw:Cell>
+    </kw:map>
+    <kw:map>
+      <kw:Cell rdf:about="http://example.org/cell/MA_0000963_NCI_C49782">
+        <kw:entity1 rdf:resource="http://mouse.owl#MA_0000963"/>
+        <kw:entity2 rdf:resource="http://human.owl#NCI_C49782"/>
         <kw:measure rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</kw:measure>
         <kw:relation>=</kw:relation>
       </kw:Cell>
