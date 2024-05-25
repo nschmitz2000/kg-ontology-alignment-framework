@@ -165,7 +165,7 @@ def jaccard_similarity(str1, str2):
         return 0.0
     return len(intersection) / len(union)
 
-## Function to vectorize labels and compare with cosine
+## Functions for vectorization and cosine similarity
 def cosine_vectorize_labels(labels):
     """
     Converts a list of labels into TF-IDF vectors using TfidfVectorizer.
@@ -180,20 +180,6 @@ def cosine_vectorize_labels(labels):
     count_matrix = vectorizer.fit_transform(labels)
     return vectorizer, count_matrix
 
-def cosine_compare_labels(count_matrix, index1, index2):
-    """
-    Computes the cosine similarity between two labels based on their count vector indices.
-
-    Args:
-    count_matrix (scipy.sparse.csr.csr_matrix): The matrix containing the count vectors.
-    index1, index2 (int): Indices of the labels to compare.
-
-    Returns:
-    float: Cosine similarity score.
-    """
-    return cosine_similarity(count_matrix[index1:index1+1], count_matrix[index2:index2+1])[0][0]
-
-## Functions to vectorize labels and apply TF-IDF
 def tfidf_vectorize_labels(labels):
     """
     Converts a list of labels into TF-IDF vectors using TfidfVectorizer.
@@ -208,18 +194,18 @@ def tfidf_vectorize_labels(labels):
     tfidf_matrix = vectorizer.fit_transform(labels)
     return vectorizer, tfidf_matrix
 
-def tfidf_compare_labels(tfidf_matrix, index1, index2):
+def precompute_cosine_similarities(count_matrix):
     """
-    Computes the cosine similarity between two labels based on their TF-IDF vector indices.
+    Computes the cosine similarity matrix for all pairs of labels in the count matrix.
 
     Args:
-    tfidf_matrix (scipy.sparse.csr.csr_matrix): The matrix containing the TF-IDF vectors.
-    index1, index2 (int): Indices of the labels to compare.
+    count_matrix (scipy.sparse.csr.csr_matrix): The matrix containing the count vectors.
 
     Returns:
-    float: Cosine similarity score.
+    numpy.ndarray: A 2D array of cosine similarity scores.
     """
-    return cosine_similarity(tfidf_matrix[index1:index1+1], tfidf_matrix[index2:index2+1])[0][0]
+    return cosine_similarity(count_matrix)
+
 
 ## Wrapper function for string matching
 def execute_string_matching(metric, data1, data2):
@@ -246,77 +232,88 @@ def execute_string_matching(metric, data1, data2):
 ## Function to get best matches using string matching
 def match_ontologies(onto1_dict, onto1_list, onto2_dict, onto2_list, metric, bidirectional=False):
     labels_already_tested_labels = {} # dict to store when labels (of ontology 2) were already tested for label (of ontology 1) => necessary to avoid infite loop
-
+    class_results = {}
+    
     for label in onto1_list:
         labels_already_tested_labels[label] = []
 
     onto2_used_classes = {}
 
+    # create dictionary of index and label for ontology 1 - only needed for cosine and tf-idf
+    index_dict_label1 = {}
+    for index, label1 in enumerate(onto1_list):
+        index_dict_label1[label1] = index
+
+    # here: call vectorization functions
     if metric == "Cosine":
-        execute_cosine_string_matching(onto1_list, onto2_list)
-        # TODO extend so it return scores etc. and also can be mapped to nodes for next step
+        all_labels = onto1_list + onto2_list
+        vectorizer, matrix = cosine_vectorize_labels(all_labels)
+        similarity_matrix = precompute_cosine_similarities(matrix)
     elif metric == "TF-IDF":
-        execute_tfidf_string_matching(onto1_list, onto2_list)
-        # TODO extend so it return scores etc. and also can be mapped to nodes for next step
-    else:
-        class_results = {}
+        all_labels = onto1_list + onto2_list
+        vectorizer, matrix = tfidf_vectorize_labels(all_labels)
+        similarity_matrix = precompute_cosine_similarities(matrix)
 
-        while onto1_list: # loop over labels of ontology 1 until empty
-            #print(len(onto1_list))
-            label1 = onto1_list.pop() # remove the last element in the list => removing the last (instead of first) makes things easier and less error prone
-            # labels that got added again cause a better match was found (see later step) will be appended to the end and therefore handled immediately
+    while onto1_list: # loop over labels of ontology 1 until empty
+        #print(len(onto1_list))
+        label1 = onto1_list.pop() # remove the last element in the list => removing the last (instead of first) makes things easier and less error prone
+        # labels that got added again cause a better match was found (see later step) will be appended to the end and therefore handled immediately
 
-            # Match from Ontology 1 to Ontology 2
-            label_result = [label1, "", "", 0]
-            best_score = 0
-            already_tested_labels = labels_already_tested_labels[label1]
-            for label2 in onto2_list:
-                if label2 not in already_tested_labels: # check that label wasn't already checked in previous run
+        # Match from Ontology 1 to Ontology 2
+        label_result = [label1, "", "", 0]
+        best_score = 0
+        already_tested_labels = set(labels_already_tested_labels[label1])
+        for index2, label2 in enumerate(onto2_list):
+            if label2 not in already_tested_labels: # check that label wasn't already checked in previous run
+                if metric == "Levenshtein" or metric == "Jaccard":
                     matching_score = execute_string_matching(metric, label1, label2) # calculate string matching score
-                    # If a perfect match is found, stop iterating over labels for this entry
-                    if matching_score == 1: # handle perfect match
-                        best_score = matching_score
-                        label_result = [label1, "", label2, best_score]
-                        break # stop searching for matches cause perfect match found
-                    # Check if a match for this label has been found before
-                    if matching_score > best_score: # handle higher score then before
-                        label_result[2] = label2
-                        best_score = matching_score
+                elif metric == "Cosine" or metric == "TF-IDF":
+                    matching_score = similarity_matrix[index_dict_label1[label1]][len(index_dict_label1) + index2]
+                
+                # If a perfect match is found, stop iterating over labels for this entry
+                if matching_score == 1: # handle perfect match
+                    best_score = matching_score
+                    label_result = [label1, "", label2, best_score]
+                    break # stop searching for matches cause perfect match found
+                # Check if a match for this label has been found before
+                if matching_score > best_score: # handle higher score then before
+                    label_result[2] = label2
+                    best_score = matching_score
 
-            label_result[3] = best_score # save best score in label_result
-            label_with_best_score = label_result[2] # get label that achieved the best score
+        label_result[3] = best_score # save best score in label_result
+        label_with_best_score = label_result[2] # get label that achieved the best score
 
-            class_uri = onto1_dict[label1] # get the class_uri of the currently checked label in ontology 1
-            if label_result[3] == 0 and label_with_best_score == '': # handle if no match was found
-                class_results[class_uri] = label_result
-            else:
-                class2_uri = onto2_dict[label_with_best_score] # get class_uri of the label with best match
-                label_result[1] = class2_uri # save class_uri instead of label => TODO maybe change to not manipulate label_result as it is confusing for later steps
+        class_uri = onto1_dict[label1] # get the class_uri of the currently checked label in ontology 1
+        if label_result[3] == 0 and label_with_best_score == '': # handle if no match was found
+            class_results[class_uri] = label_result
+        else:
+            class2_uri = onto2_dict[label_with_best_score] # get class_uri of the label with best match
+            label_result[1] = class2_uri # save class_uri instead of label => TODO maybe change to not manipulate label_result as it is confusing for later steps
 
-                if class2_uri not in onto2_used_classes: # check if class found of ontology 2 is NOT already used by other class in ontology 1
-                    if class_uri not in class_results: # handle no entry exists yet for that class
+            if class2_uri not in onto2_used_classes: # check if class found of ontology 2 is NOT already used by other class in ontology 1
+                if class_uri not in class_results: # handle no entry exists yet for that class
+                    class_results[class_uri] = label_result
+                    onto2_used_classes[class2_uri] = class_uri
+                    labels_already_tested_labels[label1].append(label_with_best_score)
+                elif label_result[3] > class_results[class_uri][3]: # handle entry exist but now higher score was found with another label of the class (handles multiple labels)
                         class_results[class_uri] = label_result
                         onto2_used_classes[class2_uri] = class_uri
+                        del onto2_used_classes[class_results[class_uri][1]] # delete old class2 as it is now free to match again with other labels
                         labels_already_tested_labels[label1].append(label_with_best_score)
-                    elif label_result[3] > class_results[class_uri][3]: # handle entry exist but now higher score was found with another label of the class (handles multiple labels)
-                            class_results[class_uri] = label_result
-                            onto2_used_classes[class2_uri] = class_uri
-                            del onto2_used_classes[class_results[class_uri][1]] # delete old class2 as it is now free to match again with other labels
-                            labels_already_tested_labels[label1].append(label_with_best_score)
-                else: # class of ontology 2 already in use
-                    result_current_class_in_use = onto2_used_classes[class2_uri] # get class uri of class that uses that class of ontology 2
-                    if label_result[3] > class_results[result_current_class_in_use][3]: # if score of the new found match is higher than the current assigned one
-                        class_results[class_uri] = label_result # set the class of ontology 2 to that current class
-                        onto2_used_classes[class2_uri] = class_uri # overwrite the use of that class to new class of ontology 1
-                        old_used_label = class_results[result_current_class_in_use][0]
-                        labels_already_tested_labels[old_used_label].append(label_with_best_score)
-                        onto1_list.append(old_used_label) # add the old used label again to list again that gets iterated as it now doesnt have a match anymore
-                        class_results[result_current_class_in_use] = ["", "", "", 0] # set result of earlier class to None (could also be remmoved but that way later we can handle if no match found)
-                    else: # handle not a higher score
-                        labels_already_tested_labels[label1].append(label_with_best_score) # add the label to the already_tested_labels
-                        onto1_list.append(label1) # append currently check label again as it needs to handled again with the new information of already_tested_labels
+            else: # class of ontology 2 already in use
+                result_current_class_in_use = onto2_used_classes[class2_uri] # get class uri of class that uses that class of ontology 2
+                if label_result[3] > class_results[result_current_class_in_use][3]: # if score of the new found match is higher than the current assigned one
+                    class_results[class_uri] = label_result # set the class of ontology 2 to that current class
+                    onto2_used_classes[class2_uri] = class_uri # overwrite the use of that class to new class of ontology 1
+                    old_used_label = class_results[result_current_class_in_use][0]
+                    labels_already_tested_labels[old_used_label].append(label_with_best_score)
+                    onto1_list.append(old_used_label) # add the old used label again to list again that gets iterated as it now doesnt have a match anymore
+                    class_results[result_current_class_in_use] = ["", "", "", 0] # set result of earlier class to None (could also be remmoved but that way later we can handle if no match found)
+                else: # handle not a higher score
+                    labels_already_tested_labels[label1].append(label_with_best_score) # add the label to the already_tested_labels
+                    onto1_list.append(label1) # append currently check label again as it needs to handled again with the new information of already_tested_labels
 
-        return class_results
+    return class_results
     
 ## Function for semantic matching with LLM
 def calculate_label_similarity_llm(model_name, onto1_dict, onto2_dict):
