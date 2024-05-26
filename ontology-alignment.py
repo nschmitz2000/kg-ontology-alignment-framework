@@ -605,7 +605,7 @@ def main():
     parser.add_argument('--onto1_path', type=str, required=True, help='Path to the first ontology file.')
     parser.add_argument('--onto2_path', type=str, required=True, help='Path to the second ontology file.')
     parser.add_argument('--threshold', type=float, default=0.8, help='Threshold for similarity score acceptance.')
-    parser.add_argument('--metric', type=str, default='Jaccard', choices=['Jaccard', 'Cosine', 'TF-IDF', 'llm'], help='Metric to use for similarity calculation.')
+    parser.add_argument('--metric', type=str, default='Jaccard', choices=['Jaccard', 'Cosine', 'TF-IDF', 'Levenshtein'], help='Metric to use for similarity calculation.')
     parser.add_argument('--llm', type=str, default='all-MiniLM-L12-v2', help='Pretrained Sentence Transformer model name for LLM calculations.')
     parser.add_argument('--output', type=str, default='ontology_alignment_results.rdf', help='Path to the output RDF file.')
 
