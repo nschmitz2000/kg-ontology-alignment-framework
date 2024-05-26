@@ -465,31 +465,29 @@ def remove_overlapping_keys(overlapping_results_keys, string_matching_results, l
 ## Function to calc matches with "other matching approach"
 # method to calculate the score for a given dict of matched classes
 # this methods enables us to calculate the String matching score for the results of the LLM and vice versa
-def calc_score_for_matched_classes(matched_classes, metric, dict_sim_scores_llm={}, similarity_matrix=None, index_dict=None):
+def calc_score_for_matched_classes(matched_classes, metric, dict_sim_scores_llm={}):
     matches_with_score = {}
     for class_name, values in matched_classes.items():
         label1 = values[0]
         class_2 = values[1]
         label2 = values[2]
-        matching_score = 0
 
         if label2:
-            if metric == "llm":
-                if class_name in dict_sim_scores_llm:
-                    matching_score = dict_sim_scores_llm[class_name][class_2]
-            elif metric in ["Cosine", "TF-IDF"]:
-                if similarity_matrix is not None and index_dict is not None:
-                    index1 = index_dict.get(label1)
-                    index2 = index_dict.get(label2)
-                    if index1 is not None and index2 is not None:
-                        matching_score = similarity_matrix[index1, index2]
-            else:
-                matching_score = execute_string_matching(metric, label1, label2)  # Calculate string matching score
+            matching_score = 0
+            try:
+                if metric == "llm":
+                    # Ensures that we have nested dictionaries and that class_2 is a valid key under class_name
+                    matching_score = dict_sim_scores_llm.get(class_name, {}).get(class_2, 0)
+                else:
+                    matching_score = execute_string_matching(metric, label1, label2)  # Calculate string matching score
+            except Exception as e:
+                print(f"An error occurred while calculating scores: {e}")
+                matching_score = 0  # Default to 0 if there's an error
 
             matches_with_score[class_name] = [label1, class_2, label2, matching_score]
         else:
             matches_with_score[class_name] = [label1, class_2, "", 0]
-    
+
     return matches_with_score
 
 ## Function to combine the non-overlapping results of the two matching approaches
@@ -600,7 +598,7 @@ def process_results_and_serialize_to_rdf(final_results_over_threshold, filepath=
 onto1_path = "test_ontologies/mouse.owl"
 onto2_path = "test_ontologies/human.owl"
 threshold = 0.8
-metric = "Cosine"
+metric = "Jaccard"
 llm = "all-MiniLM-L12-v2"
 
 
@@ -634,19 +632,11 @@ final_matching_results = check_for_overlapping_matches(final_matching_results, s
 remove_overlapping_keys(final_matching_results, string_matching_results, llm_matching_results_with_labels)
 
 ## Get other metric for the non-overlapping results
-string_matches_for_llm = calc_score_for_matched_classes(
-    llm_matching_results_with_labels,  # results from previous matching using 'llm'
-    metric,  # this should be a string-based metric like 'Levenshtein' or 'Jaccard'
-    similarity_matrix=similarity_matrix,  # pass similarity matrix if your metric function can use it
-    index_dict=index_dict_label1  # the index dictionary for accessing the similarity matrix
-)
-llm_matches_for_string = calc_score_for_matched_classes(
-    string_matching_results,  # results from previous string matching
-    "llm",  # specifying 'llm' as the metric to use
-    dict_sim_scores_llm=dict_similarity_scores_llm,  # the dictionary containing precomputed 'llm' scores
-    similarity_matrix=similarity_matrix,  # pass similarity matrix if 'llm' can use it
-    index_dict=index_dict_label1  # the index dictionary for accessing the similarity matrix
-)
+string_matches_for_llm = calc_score_for_matched_classes(llm_matching_results_with_labels,
+                                                        metric)
+llm_matches_for_string = calc_score_for_matched_classes(string_matching_results,
+                                                        "llm",
+                                                        dict_sim_scores_llm=dict_similarity_scores_llm)
 
 ## Sort the ontology classes by score in descending order
 sorted_onto1_class_names_by_score = sort_ontology_classes_by_score(string_matching_results, string_matches_for_llm, llm_matching_results_with_labels, llm_matches_for_string)
