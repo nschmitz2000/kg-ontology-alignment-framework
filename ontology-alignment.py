@@ -557,42 +557,45 @@ def filter_results_by_threshold(final_matching_results, threshold):
 
 ## Function to take results and write them to an rdf file
 def process_results_and_serialize_to_rdf(final_results_over_threshold, filepath="ontology_alignment_results.rdf"):
+
+    # Convert the final results to a list of tuples
+    final_matches = []
+
+    for match in final_results_over_threshold:
+        class1 = match
+        class2 = final_results_over_threshold[match][1]
+        score = final_results_over_threshold[match][3]
+        final_matches.append((class1, class2, score, "="))
+
     # Initialize graph
     g = rdflib.Graph()
 
     # Define namespaces
-    RDF = rdflib.namespace.RDF
     KNOWLEDGEWEB = rdflib.Namespace("http://knowledgeweb.semanticweb.org/heterogeneity/alignment#")
     g.bind("kw", KNOWLEDGEWEB)
 
     # Create the root element for the alignment
-    alignment = rdflib.BNode()  # Using a blank node for alignment
-    g.add((alignment, RDF.type, KNOWLEDGEWEB.Alignment))
+    alignment = rdflib.URIRef("http://example.org/alignment")
+
+    # Add basic alignment properties
+    g.add((alignment, rdflib.namespace.RDF.type, KNOWLEDGEWEB.Alignment))
     g.add((alignment, KNOWLEDGEWEB.xml, rdflib.Literal("yes")))
     g.add((alignment, KNOWLEDGEWEB.level, rdflib.Literal("0")))
     g.add((alignment, KNOWLEDGEWEB.type, rdflib.Literal("??")))
 
     # Add each match to the graph
-    map_node = rdflib.BNode()  # Using a blank node for map
-    g.add((alignment, KNOWLEDGEWEB.map, map_node))
-
-    for class_name, values in final_results_over_threshold.items():
-        class1 = class_name
-        class2 = values[1]
-        score = values[3]
-        relation = "="
-        
-        # Create RDF cells and add to graph
-        cell = rdflib.BNode()  # Using a blank node for each cell
-        g.add((map_node, RDF.type, cell))
-        g.add((cell, KNOWLEDGEWEB.entity1, rdflib.URIRef(class1)))
-        g.add((cell, KNOWLEDGEWEB.entity2, rdflib.URIRef(class2)))
-        g.add((cell, KNOWLEDGEWEB.measure, rdflib.Literal(score, datatype=rdflib.namespace.XSD.float)))
+    for entity1, entity2, measure, relation in final_matches:
+        cell = rdflib.URIRef(f"http://example.org/cell/{entity1.split('#')[-1]}_{entity2.split('#')[-1]}")
+        g.add((cell, rdflib.namespace.RDF.type, KNOWLEDGEWEB.Cell))
+        g.add((cell, KNOWLEDGEWEB.entity1, rdflib.URIRef(entity1)))
+        g.add((cell, KNOWLEDGEWEB.entity2, rdflib.URIRef(entity2)))
+        g.add((cell, KNOWLEDGEWEB.measure, rdflib.Literal(measure, datatype=rdflib.namespace.XSD.float)))
         g.add((cell, KNOWLEDGEWEB.relation, rdflib.Literal(relation)))
+        g.add((alignment, KNOWLEDGEWEB.map, cell))
 
-    # Serialize the graph to an RDF file
+    # Serialize the graph to an RDF file (e.g., in RDF/XML format)
     with open(filepath, "wb") as f:
-        f.write(g.serialize(format='xml').encode("utf-8"))
+        f.write(g.serialize(format='pretty-xml').encode("utf-8"))
 
 # Get all user inputs
 onto1_path = "test_ontologies/mouse.owl"
