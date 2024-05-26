@@ -12,6 +12,9 @@ import logging
 from sentence_transformers import SentenceTransformer, util
 import argparse
 
+# Ignore warnings
+import warnings
+warnings.filterwarnings("ignore")
 
 # Define all functions here
 
@@ -230,90 +233,79 @@ def execute_string_matching(metric, data1, data2):
         raise ValueError("Invalid metric selection for string matching.")
     
 ## Function to get best matches using string matching
-def match_ontologies(onto1_dict, onto1_list, onto2_dict, onto2_list, metric, bidirectional=False):
-    labels_already_tested_labels = {} # dict to store when labels (of ontology 2) were already tested for label (of ontology 1) => necessary to avoid infite loop
-    class_results = {}
-    
-    for label in onto1_list:
-        labels_already_tested_labels[label] = []
+def match_ontologies(onto1_dict, onto1_list, onto2_dict, onto2_list, metric):
+    try:
+        labels_already_tested_labels = {}  # Dict to store which labels have already been tested to avoid infinite loops
+        class_results = {}
 
-    onto2_used_classes = {}
+        if not onto1_list or not onto2_list:  # Ensure the input lists are not empty
+            raise ValueError("Ontology lists must not be empty.")
 
-    # create dictionary of index and label for ontology 1 - only needed for cosine and tf-idf
-    index_dict_label1 = {}
-    for index, label1 in enumerate(onto1_list):
-        index_dict_label1[label1] = index
+        for label in onto1_list:
+            labels_already_tested_labels[label] = []
 
-    # here: call vectorization functions
-    if metric == "Cosine":
-        all_labels = onto1_list + onto2_list
-        vectorizer, matrix = cosine_vectorize_labels(all_labels)
-        similarity_matrix = precompute_cosine_similarities(matrix)
-    elif metric == "TF-IDF":
-        all_labels = onto1_list + onto2_list
-        vectorizer, matrix = tfidf_vectorize_labels(all_labels)
-        similarity_matrix = precompute_cosine_similarities(matrix)
+        onto2_used_classes = {}
+        index_dict_label1 = {}
+        for index, label1 in enumerate(onto1_list):
+            index_dict_label1[label1] = index
 
-    while onto1_list: # loop over labels of ontology 1 until empty
-        #print(len(onto1_list))
-        label1 = onto1_list.pop() # remove the last element in the list => removing the last (instead of first) makes things easier and less error prone
-        # labels that got added again cause a better match was found (see later step) will be appended to the end and therefore handled immediately
+        # Initialize similarity matrix based on the metric
+        similarity_matrix = None
+        if metric == "Cosine" or metric == "TF-IDF":
+            all_labels = onto1_list + onto2_list
+            vectorizer, matrix = (cosine_vectorize_labels if metric == "Cosine" else tfidf_vectorize_labels)(all_labels)
+            similarity_matrix = precompute_cosine_similarities(matrix)
 
-        # Match from Ontology 1 to Ontology 2
-        label_result = [label1, "", "", 0]
-        best_score = 0
-        already_tested_labels = set(labels_already_tested_labels[label1])
-        for index2, label2 in enumerate(onto2_list):
-            if label2 not in already_tested_labels: # check that label wasn't already checked in previous run
-                if metric == "Levenshtein" or metric == "Jaccard":
-                    matching_score = execute_string_matching(metric, label1, label2) # calculate string matching score
-                elif metric == "Cosine" or metric == "TF-IDF":
-                    matching_score = similarity_matrix[index_dict_label1[label1]][len(index_dict_label1) + index2]
-                
-                # If a perfect match is found, stop iterating over labels for this entry
-                if matching_score == 1: # handle perfect match
-                    best_score = matching_score
-                    label_result = [label1, "", label2, best_score]
-                    break # stop searching for matches cause perfect match found
-                # Check if a match for this label has been found before
-                if matching_score > best_score: # handle higher score then before
-                    label_result[2] = label2
-                    best_score = matching_score
+        while onto1_list:
+            label1 = onto1_list.pop()
+            label_result = [label1, "", "", 0]
+            best_score = 0
+            already_tested_labels = set(labels_already_tested_labels[label1])
 
-        label_result[3] = best_score # save best score in label_result
-        label_with_best_score = label_result[2] # get label that achieved the best score
+            for index2, label2 in enumerate(onto2_list):
+                if label2 not in already_tested_labels:
+                    if metric in ["Levenshtein", "Jaccard"]:
+                        matching_score = execute_string_matching(metric, label1, label2)
+                    elif metric in ["Cosine", "TF-IDF"]:
+                        matching_score = similarity_matrix[index_dict_label1[label1], index_dict_label1.get(label2, -1)]
+                        if matching_score == None:  # Skip if there's no entry for the label
+                            continue
 
-        class_uri = onto1_dict[label1] # get the class_uri of the currently checked label in ontology 1
-        if label_result[3] == 0 and label_with_best_score == '': # handle if no match was found
-            class_results[class_uri] = label_result
-        else:
-            class2_uri = onto2_dict[label_with_best_score] # get class_uri of the label with best match
-            label_result[1] = class2_uri # save class_uri instead of label => TODO maybe change to not manipulate label_result as it is confusing for later steps
+                    if matching_score == 1:
+                        best_score = matching_score
+                        label_result = [label1, "", label2, best_score]
+                        break
+                    if matching_score > best_score:
+                        best_score = matching_score
+                        label_result[2] = label2
 
-            if class2_uri not in onto2_used_classes: # check if class found of ontology 2 is NOT already used by other class in ontology 1
-                if class_uri not in class_results: # handle no entry exists yet for that class
+            label_result[3] = best_score
+            label_with_best_score = label_result[2]
+            class_uri = onto1_dict[label1]
+            if label_result[3] == 0 and not label_with_best_score:
+                class_results[class_uri] = label_result
+            else:
+                class2_uri = onto2_dict.get(label_with_best_score)
+                if class2_uri and class2_uri not in onto2_used_classes:
                     class_results[class_uri] = label_result
                     onto2_used_classes[class2_uri] = class_uri
                     labels_already_tested_labels[label1].append(label_with_best_score)
-                elif label_result[3] > class_results[class_uri][3]: # handle entry exist but now higher score was found with another label of the class (handles multiple labels)
+                elif class2_uri:
+                    result_current_class_in_use = onto2_used_classes.get(class2_uri)
+                    if best_score > class_results[result_current_class_in_use][3]:
                         class_results[class_uri] = label_result
                         onto2_used_classes[class2_uri] = class_uri
-                        del onto2_used_classes[class_results[class_uri][1]] # delete old class2 as it is now free to match again with other labels
-                        labels_already_tested_labels[label1].append(label_with_best_score)
-            else: # class of ontology 2 already in use
-                result_current_class_in_use = onto2_used_classes[class2_uri] # get class uri of class that uses that class of ontology 2
-                if label_result[3] > class_results[result_current_class_in_use][3]: # if score of the new found match is higher than the current assigned one
-                    class_results[class_uri] = label_result # set the class of ontology 2 to that current class
-                    onto2_used_classes[class2_uri] = class_uri # overwrite the use of that class to new class of ontology 1
-                    old_used_label = class_results[result_current_class_in_use][0]
-                    labels_already_tested_labels[old_used_label].append(label_with_best_score)
-                    onto1_list.append(old_used_label) # add the old used label again to list again that gets iterated as it now doesnt have a match anymore
-                    class_results[result_current_class_in_use] = ["", "", "", 0] # set result of earlier class to None (could also be remmoved but that way later we can handle if no match found)
-                else: # handle not a higher score
-                    labels_already_tested_labels[label1].append(label_with_best_score) # add the label to the already_tested_labels
-                    onto1_list.append(label1) # append currently check label again as it needs to handled again with the new information of already_tested_labels
+                        old_used_label = class_results[result_current_class_in_use][0]
+                        labels_already_tested_labels[old_used_label].append(label_with_best_score)
+                        onto1_list.append(old_used_label)  # Re-add for re-evaluation
+                        class_results[result_current_class_in_use] = ["", "", "", 0]
 
-    return class_results
+        print(f"String matching was successful using the {metric} metric.")
+        return class_results, similarity_matrix, index_dict_label1
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return {}, None, {}
     
 ## Function for semantic matching with LLM
 def calculate_label_similarity_llm(model_name, onto1_dict, onto2_dict):
@@ -339,38 +331,44 @@ def calculate_label_similarity_llm(model_name, onto1_dict, onto2_dict):
     
     try:
         model = SentenceTransformer(model_name, device=device)
-        print(f"Using model: {model_name} on device: {device}")
+        print(f"Using sentence transformer model: {model_name} on device: {device}")
     except Exception as e:
         logging.error(f"Error loading model: {e}")
         # Fallback to a default model if there's an error
         fallback_model_name = 'all-MiniLM-L6-v2'
         model = SentenceTransformer(fallback_model_name, device=device)
-        print(f"Using fallback model: {fallback_model_name} on device: {device}")
+        print(f"Using fallback sentence transformer model: {fallback_model_name} on device: {device}")
     
-    onto1_labels, onto1_classes = zip(*onto1_dict.items())
-    onto2_labels, onto2_classes = zip(*onto2_dict.items())
+    try:
+        onto1_labels, onto1_classes = zip(*onto1_dict.items())
+        onto2_labels, onto2_classes = zip(*onto2_dict.items())
 
-    onto1_label_embeddings = model.encode(list(onto1_labels), convert_to_tensor=True, device=device)
-    onto2_label_embeddings = model.encode(list(onto2_labels), convert_to_tensor=True, device=device)
+        onto1_label_embeddings = model.encode(list(onto1_labels), convert_to_tensor=True, device=device)
+        onto2_label_embeddings = model.encode(list(onto2_labels), convert_to_tensor=True, device=device)
 
-    similarity_scores = util.pytorch_cos_sim(onto1_label_embeddings, onto2_label_embeddings)
+        similarity_scores = util.pytorch_cos_sim(onto1_label_embeddings, onto2_label_embeddings)
 
-    # Initialize the dictionary to hold results
-    results_dict = {}
+        # Initialize the dictionary to hold results
+        results_dict = {}
 
-    # Fill the dictionary with similarity scores
-    for i, onto1_class in enumerate(onto1_classes):
-        results_dict[onto1_class] = {}
-        for j, onto2_class in enumerate(onto2_classes):
-            results_dict[onto1_class][onto2_class] = similarity_scores[i][j].item()
+        # Fill the dictionary with similarity scores
+        for i, onto1_class in enumerate(onto1_classes):
+            results_dict[onto1_class] = {}
+            for j, onto2_class in enumerate(onto2_classes):
+                results_dict[onto1_class][onto2_class] = similarity_scores[i][j].item()
 
-    # Sort the dictionary entries by similarity score within each onto1_class
-    sorted_results_dict = {}
-    for onto1_class in results_dict:
-        sorted_onto2_classes = sorted(results_dict[onto1_class].items(), key=lambda x: x[1], reverse=True)
-        sorted_results_dict[onto1_class] = dict(sorted_onto2_classes)
+        # Sort the dictionary entries by similarity score within each onto1_class
+        sorted_results_dict = {}
+        for onto1_class in results_dict:
+            sorted_onto2_classes = sorted(results_dict[onto1_class].items(), key=lambda x: x[1], reverse=True)
+            sorted_results_dict[onto1_class] = dict(sorted_onto2_classes)
 
-    return sorted_results_dict
+        print(f"LLM similarity calculation was successful using the {model_name} model.")
+        return sorted_results_dict
+
+    except Exception as e:
+        logging.error(f"An error occurred during processing: {e}")
+        return {}
 
 ## Functions to get best matches using LLM
 def set_new_match(class1_uri, class2_uri, score, onto2_used_classes, class_results):
@@ -444,9 +442,8 @@ def add_labels(data, onto1_label, onto2_label):
     return data
 
 ## Function to check for overlapping matches
-def check_for_overlapping_matches(string_matching_results, matched_results_llm_with_labels):
-    final_matching_results = {}
-    
+def check_for_overlapping_matches(final_matching_results, string_matching_results, matched_results_llm_with_labels):
+
     for class_name, values in string_matching_results.items():
         class_2 = values[1]
         if class_2 and matched_results_llm_with_labels[class_name][1] == class_2:
@@ -460,27 +457,35 @@ def check_for_overlapping_matches(string_matching_results, matched_results_llm_w
     return final_matching_results
 
 ## Function to remove overlapping matches - !!IN PLACE!!
-def remove_overlapping_keys(overlapping_results_keys, string_matching_results, matched_results_llm_with_labels):
+def remove_overlapping_keys(overlapping_results_keys, string_matching_results, llm_matching_results_with_labels):
     for key in overlapping_results_keys:
         string_matching_results.pop(key, None)
-        matched_results_llm_with_labels.pop(key, None)
+        llm_matching_results_with_labels.pop(key, None)
 
 ## Function to calc matches with "other matching approach"
 # method to calculate the score for a given dict of matched classes
 # this methods enables us to calculate the String matching score for the results of the LLM and vice versa
-def calc_score_for_matched_classes(matched_classes, metric, dict_sim_scores_llm = {}):
+def calc_score_for_matched_classes(matched_classes, metric, dict_sim_scores_llm={}, similarity_matrix=None, index_dict=None):
     matches_with_score = {}
     for class_name, values in matched_classes.items():
         label1 = values[0]
         class_2 = values[1]
         label2 = values[2]
+        matching_score = 0
+
         if label2:
-            matching_score = 0
             if metric == "llm":
                 if class_name in dict_sim_scores_llm:
                     matching_score = dict_sim_scores_llm[class_name][class_2]
+            elif metric in ["Cosine", "TF-IDF"]:
+                if similarity_matrix is not None and index_dict is not None:
+                    index1 = index_dict.get(label1)
+                    index2 = index_dict.get(label2)
+                    if index1 is not None and index2 is not None:
+                        matching_score = similarity_matrix[index1, index2]
             else:
-                matching_score = execute_string_matching(metric, label1, label2) # calculate string matching score
+                matching_score = execute_string_matching(metric, label1, label2)  # Calculate string matching score
+
             matches_with_score[class_name] = [label1, class_2, label2, matching_score]
         else:
             matches_with_score[class_name] = [label1, class_2, "", 0]
@@ -553,7 +558,7 @@ def filter_results_by_threshold(final_matching_results, threshold):
     return final_results_over_threshold
 
 ## Function to take results and write them to an rdf file
-def process_results_and_serialize_to_rdf(final_results_over_threshold, filepath="ontology_matching_results.rdf"):
+def process_results_and_serialize_to_rdf(final_results_over_threshold, filepath="ontology_alignment_results.rdf"):
     # Initialize graph
     g = rdflib.Graph()
 
@@ -592,8 +597,66 @@ def process_results_and_serialize_to_rdf(final_results_over_threshold, filepath=
         f.write(g.serialize(format='xml').encode("utf-8"))
 
 # Get all user inputs
-
+onto1_path = "test_ontologies/mouse.owl"
+onto2_path = "test_ontologies/human.owl"
+threshold = 0.8
+metric = "Cosine"
+llm = "all-MiniLM-L12-v2"
 
 
 # Apply the functions here
+## Read the ontologies
+onto1_graph = load_ontology(onto1_path)
+onto2_graph = load_ontology(onto2_path)
 
+## Extract the information from the ontologies
+onto1_dict, onto1_list = extract_ontology_details_to_dict(onto1_graph)
+onto2_dict, onto2_list = extract_ontology_details_to_dict(onto2_graph) 
+
+## Transform the dictionaries to handle multiple labels (if any) - just needed for LLM post-processing
+onto1_transformed_dict = transform_dict(onto1_dict)
+onto2_transformed_dict = transform_dict(onto2_dict)
+
+## Apply exact string matching and put into final matching results
+exact_matches, onto1_dict_after_exact, onto1_list_after_exact, onto2_dict_after_exact, onto2_list_after_exact = exact_string_match(onto1_dict, onto1_list, onto2_dict, onto2_list)
+final_matching_results = exact_matches.copy()
+
+## Apply string matching
+string_matching_results, similarity_matrix, index_dict_label1 = match_ontologies(onto1_dict_after_exact, onto1_list_after_exact, onto2_dict_after_exact, onto2_list_after_exact, metric)
+
+## Apply LLM
+dict_similarity_scores_llm = calculate_label_similarity_llm(llm, onto1_dict_after_exact, onto2_dict_after_exact)
+llm_matching_results = perform_matching_llm(dict_similarity_scores_llm)
+llm_matching_results_with_labels = add_labels(llm_matching_results, onto1_transformed_dict, onto2_transformed_dict)
+
+## Check for overlapping matches and remove from original lists
+final_matching_results = check_for_overlapping_matches(final_matching_results, string_matching_results, llm_matching_results_with_labels)
+remove_overlapping_keys(final_matching_results, string_matching_results, llm_matching_results_with_labels)
+
+## Get other metric for the non-overlapping results
+string_matches_for_llm = calc_score_for_matched_classes(
+    llm_matching_results_with_labels,  # results from previous matching using 'llm'
+    metric,  # this should be a string-based metric like 'Levenshtein' or 'Jaccard'
+    similarity_matrix=similarity_matrix,  # pass similarity matrix if your metric function can use it
+    index_dict=index_dict_label1  # the index dictionary for accessing the similarity matrix
+)
+llm_matches_for_string = calc_score_for_matched_classes(
+    string_matching_results,  # results from previous string matching
+    "llm",  # specifying 'llm' as the metric to use
+    dict_sim_scores_llm=dict_similarity_scores_llm,  # the dictionary containing precomputed 'llm' scores
+    similarity_matrix=similarity_matrix,  # pass similarity matrix if 'llm' can use it
+    index_dict=index_dict_label1  # the index dictionary for accessing the similarity matrix
+)
+
+## Sort the ontology classes by score in descending order
+sorted_onto1_class_names_by_score = sort_ontology_classes_by_score(string_matching_results, string_matches_for_llm, llm_matching_results_with_labels, llm_matches_for_string)
+
+## Resolve conflicts and pick the best matching
+remaining_results = resolve_conflicts_and_pick_best(sorted_onto1_class_names_by_score, string_matching_results, string_matches_for_llm, llm_matching_results_with_labels, llm_matches_for_string)
+final_matching_results.update(remaining_results)
+
+## Filter results by threshold
+final_matching_results = filter_results_by_threshold(final_matching_results, threshold)
+
+## Serialize the results to an RDF file
+process_results_and_serialize_to_rdf(final_matching_results)

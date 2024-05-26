@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF
-  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:kw="http://knowledgeweb.semanticweb.org/heterogeneity/alignment#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 >
   <kw:Alignment rdf:about="http://example.org/alignment">
     <kw:xml>yes</kw:xml>
