@@ -557,28 +557,24 @@ def filter_results_by_threshold(final_matching_results, threshold):
 
 ## Function to take results and write them to an rdf file
 def process_results_and_serialize_to_rdf(final_results_over_threshold, filepath="ontology_alignment_results.rdf"):
-
-    # Convert the final results to a list of tuples
-    final_matches = []
-
-    for match in final_results_over_threshold:
-        class1 = match
-        class2 = final_results_over_threshold[match][1]
-        score = final_results_over_threshold[match][3]
-        final_matches.append((class1, class2, score, "="))
-
     # Initialize graph
     g = rdflib.Graph()
 
-    # Define namespaces
+    # Define and bind namespaces
     KNOWLEDGEWEB = rdflib.Namespace("http://knowledgeweb.semanticweb.org/heterogeneity/alignment#")
-    g.bind("kw", KNOWLEDGEWEB)
+    XSD = rdflib.namespace.XSD
+    g.bind("xsd", XSD)  # Bind XSD namespace
+
+    # Set the default namespace
+    g.bind("", KNOWLEDGEWEB)  # Bind as default namespace
+
+    # Convert the final results to a list of tuples
+    final_matches = [(match, final_results_over_threshold[match][1], final_results_over_threshold[match][3], "=")
+                     for match in final_results_over_threshold]
 
     # Create the root element for the alignment
     alignment = rdflib.URIRef("http://example.org/alignment")
-
-    # Add basic alignment properties
-    g.add((alignment, rdflib.namespace.RDF.type, KNOWLEDGEWEB.Alignment))
+    g.add((alignment, rdflib.RDF.type, KNOWLEDGEWEB.Alignment))
     g.add((alignment, KNOWLEDGEWEB.xml, rdflib.Literal("yes")))
     g.add((alignment, KNOWLEDGEWEB.level, rdflib.Literal("0")))
     g.add((alignment, KNOWLEDGEWEB.type, rdflib.Literal("??")))
@@ -586,16 +582,18 @@ def process_results_and_serialize_to_rdf(final_results_over_threshold, filepath=
     # Add each match to the graph
     for entity1, entity2, measure, relation in final_matches:
         cell = rdflib.URIRef(f"http://example.org/cell/{entity1.split('#')[-1]}_{entity2.split('#')[-1]}")
-        g.add((cell, rdflib.namespace.RDF.type, KNOWLEDGEWEB.Cell))
+        g.add((cell, rdflib.RDF.type, KNOWLEDGEWEB.Cell))
         g.add((cell, KNOWLEDGEWEB.entity1, rdflib.URIRef(entity1)))
         g.add((cell, KNOWLEDGEWEB.entity2, rdflib.URIRef(entity2)))
-        g.add((cell, KNOWLEDGEWEB.measure, rdflib.Literal(measure, datatype=rdflib.namespace.XSD.float)))
+        g.add((cell, KNOWLEDGEWEB.measure, rdflib.Literal(measure, datatype=XSD.float)))
         g.add((cell, KNOWLEDGEWEB.relation, rdflib.Literal(relation)))
         g.add((alignment, KNOWLEDGEWEB.map, cell))
 
     # Serialize the graph to an RDF file (e.g., in RDF/XML format)
     with open(filepath, "wb") as f:
         f.write(g.serialize(format='pretty-xml').encode("utf-8"))
+
+    print(f"Results have been successfully written to {filepath}")
 
 def main():
     parser = argparse.ArgumentParser(description='Run ontology alignment.')
@@ -604,6 +602,7 @@ def main():
     parser.add_argument('--threshold', type=float, default=0.8, help='Threshold for similarity score acceptance.')
     parser.add_argument('--metric', type=str, default='Jaccard', choices=['Jaccard', 'Cosine', 'TF-IDF', 'llm'], help='Metric to use for similarity calculation.')
     parser.add_argument('--llm', type=str, default='all-MiniLM-L12-v2', help='Pretrained Sentence Transformer model name for LLM calculations.')
+    parser.add_argument('--output', type=str, default='ontology_alignment_results.rdf', help='Path to the output RDF file.')
 
     args = parser.parse_args()
 
@@ -612,6 +611,7 @@ def main():
     print(f"Threshold: {args.threshold}")
     print(f"String matching metric: {args.metric}")
     print(f"LLM model: {args.llm}")
+    print(f"Output RDF file: {args.output}")
 
     # Apply the functions here
     ## Read the ontologies
@@ -660,7 +660,7 @@ def main():
     final_matching_results = filter_results_by_threshold(final_matching_results, args.threshold)
 
     ## Serialize the results to an RDF file
-    process_results_and_serialize_to_rdf(final_matching_results)
+    process_results_and_serialize_to_rdf(final_matching_results, args.output)
 
 if __name__ == "__main__":
     main()
