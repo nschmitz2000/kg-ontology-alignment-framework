@@ -597,59 +597,70 @@ def process_results_and_serialize_to_rdf(final_results_over_threshold, filepath=
     with open(filepath, "wb") as f:
         f.write(g.serialize(format='pretty-xml').encode("utf-8"))
 
-# Get all user inputs
-onto1_path = "test_ontologies/mouse.owl"
-onto2_path = "test_ontologies/human.owl"
-threshold = 0.8
-metric = "Jaccard"
-llm = "all-MiniLM-L12-v2"
+def main():
+    parser = argparse.ArgumentParser(description='Run ontology alignment.')
+    parser.add_argument('--onto1_path', type=str, required=True, help='Path to the first ontology file.')
+    parser.add_argument('--onto2_path', type=str, required=True, help='Path to the second ontology file.')
+    parser.add_argument('--threshold', type=float, default=0.8, help='Threshold for similarity score acceptance.')
+    parser.add_argument('--metric', type=str, default='Jaccard', choices=['Jaccard', 'Cosine', 'TF-IDF', 'llm'], help='Metric to use for similarity calculation.')
+    parser.add_argument('--llm', type=str, default='all-MiniLM-L12-v2', help='Pretrained Sentence Transformer model name for LLM calculations.')
 
+    args = parser.parse_args()
 
-# Apply the functions here
-## Read the ontologies
-onto1_graph = load_ontology(onto1_path)
-onto2_graph = load_ontology(onto2_path)
+    print(f"Ontology 1 Path: {args.onto1_path}")
+    print(f"Ontology 2 Path: {args.onto2_path}")
+    print(f"Threshold: {args.threshold}")
+    print(f"String matching metric: {args.metric}")
+    print(f"LLM model: {args.llm}")
 
-## Extract the information from the ontologies
-onto1_dict, onto1_list = extract_ontology_details_to_dict(onto1_graph)
-onto2_dict, onto2_list = extract_ontology_details_to_dict(onto2_graph) 
+    # Apply the functions here
+    ## Read the ontologies
+    onto1_graph = load_ontology(args.onto1_path)
+    onto2_graph = load_ontology(args.onto2_path)
 
-## Transform the dictionaries to handle multiple labels (if any) - just needed for LLM post-processing
-onto1_transformed_dict = transform_dict(onto1_dict)
-onto2_transformed_dict = transform_dict(onto2_dict)
+    ## Extract the information from the ontologies
+    onto1_dict, onto1_list = extract_ontology_details_to_dict(onto1_graph)
+    onto2_dict, onto2_list = extract_ontology_details_to_dict(onto2_graph) 
 
-## Apply exact string matching and put into final matching results
-exact_matches, onto1_dict_after_exact, onto1_list_after_exact, onto2_dict_after_exact, onto2_list_after_exact = exact_string_match(onto1_dict, onto1_list, onto2_dict, onto2_list)
-final_matching_results = exact_matches.copy()
+    ## Transform the dictionaries to handle multiple labels (if any) - just needed for LLM post-processing
+    onto1_transformed_dict = transform_dict(onto1_dict)
+    onto2_transformed_dict = transform_dict(onto2_dict)
 
-## Apply string matching
-string_matching_results, similarity_matrix, index_dict_label1 = match_ontologies(onto1_dict_after_exact, onto1_list_after_exact, onto2_dict_after_exact, onto2_list_after_exact, metric)
+    ## Apply exact string matching and put into final matching results
+    exact_matches, onto1_dict_after_exact, onto1_list_after_exact, onto2_dict_after_exact, onto2_list_after_exact = exact_string_match(onto1_dict, onto1_list, onto2_dict, onto2_list)
+    final_matching_results = exact_matches.copy()
 
-## Apply LLM
-dict_similarity_scores_llm = calculate_label_similarity_llm(llm, onto1_dict_after_exact, onto2_dict_after_exact)
-llm_matching_results = perform_matching_llm(dict_similarity_scores_llm)
-llm_matching_results_with_labels = add_labels(llm_matching_results, onto1_transformed_dict, onto2_transformed_dict)
+    ## Apply string matching
+    string_matching_results, similarity_matrix, index_dict_label1 = match_ontologies(onto1_dict_after_exact, onto1_list_after_exact, onto2_dict_after_exact, onto2_list_after_exact, args.metric)
 
-## Check for overlapping matches and remove from original lists
-final_matching_results = check_for_overlapping_matches(final_matching_results, string_matching_results, llm_matching_results_with_labels)
-remove_overlapping_keys(final_matching_results, string_matching_results, llm_matching_results_with_labels)
+    ## Apply LLM
+    dict_similarity_scores_llm = calculate_label_similarity_llm(args.llm, onto1_dict_after_exact, onto2_dict_after_exact)
+    llm_matching_results = perform_matching_llm(dict_similarity_scores_llm)
+    llm_matching_results_with_labels = add_labels(llm_matching_results, onto1_transformed_dict, onto2_transformed_dict)
 
-## Get other metric for the non-overlapping results
-string_matches_for_llm = calc_score_for_matched_classes(llm_matching_results_with_labels,
-                                                        metric)
-llm_matches_for_string = calc_score_for_matched_classes(string_matching_results,
-                                                        "llm",
-                                                        dict_sim_scores_llm=dict_similarity_scores_llm)
+    ## Check for overlapping matches and remove from original lists
+    final_matching_results = check_for_overlapping_matches(final_matching_results, string_matching_results, llm_matching_results_with_labels)
+    remove_overlapping_keys(final_matching_results, string_matching_results, llm_matching_results_with_labels)
 
-## Sort the ontology classes by score in descending order
-sorted_onto1_class_names_by_score = sort_ontology_classes_by_score(string_matching_results, string_matches_for_llm, llm_matching_results_with_labels, llm_matches_for_string)
+    ## Get other metric for the non-overlapping results
+    string_matches_for_llm = calc_score_for_matched_classes(llm_matching_results_with_labels,
+                                                            args.metric)
+    llm_matches_for_string = calc_score_for_matched_classes(string_matching_results,
+                                                            "llm",
+                                                            dict_sim_scores_llm=dict_similarity_scores_llm)
 
-## Resolve conflicts and pick the best matching
-remaining_results = resolve_conflicts_and_pick_best(sorted_onto1_class_names_by_score, string_matching_results, string_matches_for_llm, llm_matching_results_with_labels, llm_matches_for_string)
-final_matching_results.update(remaining_results)
+    ## Sort the ontology classes by score in descending order
+    sorted_onto1_class_names_by_score = sort_ontology_classes_by_score(string_matching_results, string_matches_for_llm, llm_matching_results_with_labels, llm_matches_for_string)
 
-## Filter results by threshold
-final_matching_results = filter_results_by_threshold(final_matching_results, threshold)
+    ## Resolve conflicts and pick the best matching
+    remaining_results = resolve_conflicts_and_pick_best(sorted_onto1_class_names_by_score, string_matching_results, string_matches_for_llm, llm_matching_results_with_labels, llm_matches_for_string)
+    final_matching_results.update(remaining_results)
 
-## Serialize the results to an RDF file
-process_results_and_serialize_to_rdf(final_matching_results)
+    ## Filter results by threshold
+    final_matching_results = filter_results_by_threshold(final_matching_results, args.threshold)
+
+    ## Serialize the results to an RDF file
+    process_results_and_serialize_to_rdf(final_matching_results)
+
+if __name__ == "__main__":
+    main()
