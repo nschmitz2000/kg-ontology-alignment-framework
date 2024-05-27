@@ -679,12 +679,7 @@ def main():
                                                             index_dict_label2=index_dict_label2)
     llm_matches_for_string = calc_score_for_matched_classes(string_matching_results,
                                                             "llm",
-                                                            dict_sim_scores_llm=dict_similarity_scores_llm)
-
-    # Print the first 20 entries
-    from itertools import islice
-    for key, value in islice(string_matches_for_llm.items(), 20):
-        print(f'{key}: {value}')    
+                                                            dict_sim_scores_llm=dict_similarity_scores_llm)   
     
     ## Sort the ontology classes by score in descending order
     sorted_onto1_class_names_by_score = sort_ontology_classes_by_score(string_matching_results, string_matches_for_llm, llm_matching_results_with_labels, llm_matches_for_string)
