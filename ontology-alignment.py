@@ -232,7 +232,7 @@ def execute_string_matching(metric, data1, data2):
         raise ValueError("Invalid metric selection for string matching.")
     
 ## Function to get best matches using string matching
-def match_ontologies(onto1_dict, onto1_list, onto2_dict, onto2_list, metric):
+def match_ontologies(onto1_dict, onto1_list, onto2_dict, onto2_list, metric, exact_matches):
     try:
         labels_already_tested_labels = {}  # Dict to store which labels have already been tested to avoid infinite loops
         class_results = {}
@@ -258,6 +258,20 @@ def match_ontologies(onto1_dict, onto1_list, onto2_dict, onto2_list, metric):
             all_labels = onto1_list + onto2_list
             vectorizer, matrix = (cosine_vectorize_labels if metric == "Cosine" else tfidf_vectorize_labels)(all_labels)
             similarity_matrix = precompute_cosine_similarities(matrix)
+
+        # Remove labels that are in exact matches from the lists and dicts
+        for key, values in exact_matches.items():
+            # Access the values at index 1 and 3
+            label1 = values[0]
+            label2 = values[2]
+
+            # Remove from List
+            onto1_list = [label for label in onto1_list if label != label1]
+            onto2_list = [label for label in onto2_list if label != label2]
+
+            # Remove from Dict
+            onto1_dict.pop(label1, None)  # Use pop with default to avoid KeyError if label is not found
+            onto2_dict.pop(label2, None)
 
         while onto1_list:
             label1 = onto1_list.pop()
@@ -311,7 +325,7 @@ def match_ontologies(onto1_dict, onto1_list, onto2_dict, onto2_list, metric):
         return {}, None, {}
     
 ## Function for semantic matching with LLM
-def calculate_label_similarity_llm(model_name, onto1_dict, onto2_dict):
+def calculate_label_similarity_llm(model_name, onto1_dict, onto2_dict, exact_matches):
     """
     Calculate cosine similarity between pairs of labels from two sets and return the results in a dictionary.
     Each key in the dictionary is the class URI from ontology 1, and each value is a list of tuples,
@@ -354,11 +368,21 @@ def calculate_label_similarity_llm(model_name, onto1_dict, onto2_dict):
         # Initialize the dictionary to hold results
         results_dict = {}
 
+        # Get sets of exact_match classes
+        matched_onto1_classes = set()
+        matched_onto2_classes = set()
+
+        for key, values in exact_matches.items():
+            matched_onto1_classes.add(key)
+            matched_onto2_classes.add(values[1])
+
         # Fill the dictionary with similarity scores
         for i, onto1_class in enumerate(onto1_classes):
-            results_dict[onto1_class] = {}
-            for j, onto2_class in enumerate(onto2_classes):
-                results_dict[onto1_class][onto2_class] = similarity_scores[i][j].item()
+            if onto1_class not in matched_onto1_classes:
+                results_dict[onto1_class] = {}
+                for j, onto2_class in enumerate(onto2_classes):
+                    if onto2_class not in matched_onto2_classes:
+                        results_dict[onto1_class][onto2_class] = similarity_scores[i][j].item()
 
         # Sort the dictionary entries by similarity score within each onto1_class
         sorted_results_dict = {}
@@ -636,10 +660,10 @@ def main():
     final_matching_results = exact_matches.copy()
 
     ## Apply string matching
-    string_matching_results, similarity_matrix, index_dict_label1, index_dict_label2 = match_ontologies(onto1_dict_after_exact, onto1_list_after_exact, onto2_dict_after_exact, onto2_list_after_exact, args.metric)
+    string_matching_results, similarity_matrix, index_dict_label1, index_dict_label2 = match_ontologies(onto1_dict, onto1_list, onto2_dict, onto2_list, args.metric, exact_matches)
 
     ## Apply LLM
-    dict_similarity_scores_llm = calculate_label_similarity_llm(args.llm, onto1_dict_after_exact, onto2_dict_after_exact)
+    dict_similarity_scores_llm = calculate_label_similarity_llm(args.llm, onto1_dict, onto2_dict, exact_matches)
     llm_matching_results = perform_matching_llm(dict_similarity_scores_llm)
     llm_matching_results_with_labels = add_labels(llm_matching_results, onto1_transformed_dict, onto2_transformed_dict)
 
