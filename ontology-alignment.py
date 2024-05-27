@@ -510,7 +510,7 @@ def calc_score_for_matched_classes(matched_classes, metric, dict_sim_scores_llm=
                 else:
                     matching_score = execute_string_matching(metric, label1, label2)  # Calculate string matching score
             except Exception as e:
-                print(f"An error occurred while calculating scores: {e}")
+                print(f"An error occurred while calculating scores and has been set to 0: {e}")
                 matching_score = 0  # Default to 0 if there's an error
 
             matches_with_score[class1] = [label1, class2, label2, matching_score]
